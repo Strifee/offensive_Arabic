@@ -1,0 +1,7 @@
+torch>=1.6.0
+torchtext==0.10.0
+transformers
+nltk
+pandas
+emoji
+sklearn
