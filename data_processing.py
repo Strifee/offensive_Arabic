@@ -2,6 +2,14 @@ import emoji
 import nltk
 import re
 import string
+import pandas as pd
+
+df = pd.read_csv('data/offensivelang_dataset.csv')
+df = df.iloc[:, 2:4]
+
+test_data = df.sample(frac=0.2,random_state=200)
+test_data.shape
+data=df.drop(test_data.index)
 
 arabic_stopwords = set(nltk.corpus.stopwords.words("arabic"))
 
@@ -78,3 +86,11 @@ def cleaning_content(line):
 def hasDigits(s):
     return any( 48 <= ord(char) <= 57  or 1632 <= ord(char) <= 1641 for char in s)
 
+
+if __name__=='__main__':
+    
+    df.Comment = df.Comment.apply(cleaning_content)
+
+    comments = ' '.join(list(df.Comment))
+    words = comments.split(' ')
+    print(pd.Series(nltk.ngrams(words, 1)).value_counts()[:20])
