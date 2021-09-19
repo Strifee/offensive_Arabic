@@ -1,11 +1,11 @@
 import emoji
 import nltk
+nltk.download('stopwords')
 import re
 import string
 import pandas as pd
 
 df = pd.read_csv('data/offensivelang_dataset.csv')
-df = df.iloc[:, 2:4]
 
 test_data = df.sample(frac=0.2,random_state=200)
 test_data.shape
@@ -29,6 +29,8 @@ arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
 english_punctuations = string.punctuation
 punctuations = arabic_punctuations + english_punctuations
 
+X = df.Comment.values
+Y = df.Majority_Label.values
 
 def remove_urls (text):
     text = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', text, flags=re.MULTILINE)
