@@ -1,7 +1,14 @@
-probs = bert_predict(bert_classifier, val_dataloader)
+import numpy as np
+from classifier import BertClassifier
+from bert_processing import Y_val
+from model import bert_predict, val_dataloader
+from sklearn.metrics import accuracy_score, roc_curve, auc
+from sklearn.model_selection import train_test_split
+
+
+probs = bert_predict(BertClassifier, val_dataloader)
 
 # Evaluate the Bert classifier
-evaluate_roc(probs, Y_val.astype(float))
 
 def evaluate_roc(probs, y_true):
     """
@@ -20,3 +27,5 @@ def evaluate_roc(probs, y_true):
     accuracy = accuracy_score(y_true, y_pred)
     print(f'Accuracy: {accuracy*100:.2f}%')
   
+if __name__ == '__main__':
+    evaluate_roc(probs, Y_val.astype(float))
