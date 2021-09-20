@@ -1,27 +1,16 @@
-from data_processing import X,Y
-import time
-import gc
-import pickle
+import random
+from data_cleaning import X,Y, cleaning_content
 import torch
-import torch.nn as nn
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-import torch.nn.functional as F
-from transformers import BertTokenizer, BertModel, AdamW, get_linear_schedule_with_warmup
-
-from sklearn.metrics import accuracy_score, roc_curve, auc
+from transformers import BertTokenizer
+from hyper_parameters import MAX_LEN
 from sklearn.model_selection import train_test_split
-
 
 X_train,X_val,Y_train,Y_val = train_test_split(X,Y,test_size=0.1, random_state = random.seed(42))
 tokenizer = BertTokenizer.from_pretrained('aubmindlab/bert-base-arabertv02', do_lower_case=True)
 print('Tokenizing data...')
 
-train_inputs, train_masks = preprocessing_for_bert(X_train)
-val_inputs, val_masks = preprocessing_for_bert(X_val)
 
-
-
-class Classifier :
+class Processing :
 
     def preprocessing_for_bert(data):
         """Perform required preprocessing steps for pretrained BERT.

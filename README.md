@@ -19,6 +19,14 @@ pip install -r requirements.txt
 ```
 conda install -q pytorch torchvision cudatoolkit=11 -c pytorch-nightly
 ```
+**2. Training**
+```
+$ python train.py
+```
+**4. Testing**
+```
+$ python test.py
+```
 
 # Fine Tuning
 ```python
@@ -28,4 +36,8 @@ epochs = 4
 ```
 
 # Results
+<br/>
+AUC: 0.8596
+Accuracy: 83.45%
+<br/>
 ![image](img/output.png)

@@ -1,3 +1,34 @@
+import numpy as np
+from torch import nn
+import torch.nn.functional as F
+from classifier import BertClassifier
+from bert_processing import X_train,X_val, Y_val,Y_train
+from transformers import AdamW, get_linear_schedule_with_warmup
+from bert_processing import preprocessing_for_bert
+from hyper_parameters import batch_size
+from device import device
+import time
+import torch
+import random
+from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+
+loss_fn = nn.CrossEntropyLoss()
+
+train_inputs, train_masks = preprocessing_for_bert(X_train)
+val_inputs, val_masks = preprocessing_for_bert(X_val)
+
+train_labels = torch.tensor(Y_train.astype(float))
+val_labels = torch.tensor(Y_val.astype(float))
+
+train_data = TensorDataset(train_inputs, train_masks, train_labels)
+train_sampler = RandomSampler(train_data)
+train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
+
+val_data = TensorDataset(val_inputs, val_masks, val_labels)
+val_sampler = SequentialSampler(val_data)
+val_dataloader = DataLoader(val_data, sampler=val_sampler, batch_size=batch_size)
+
+
 def initialize_model(epochs=4):
     """Initialize the Bert Classifier, the optimizer and the learning rate scheduler.
     """
