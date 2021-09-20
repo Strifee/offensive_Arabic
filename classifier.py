@@ -3,9 +3,8 @@ import gc
 import pickle
 import torch
 import torch.nn as nn
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 import torch.nn.functional as F
-from transformers import BertTokenizer, BertModel, AdamW, get_linear_schedule_with_warmup
+from transformers import BertModel
 
 
 class BertClassifier(nn.Module):

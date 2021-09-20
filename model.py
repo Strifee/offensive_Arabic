@@ -5,12 +5,14 @@ from classifier import BertClassifier
 from bert_processing import X_train,X_val, Y_val,Y_train
 from transformers import AdamW, get_linear_schedule_with_warmup
 from bert_processing import preprocessing_for_bert
-from hyper_parameters import batch_size
 from device import device
 import time
 import torch
 import random
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+
+batch_size = 32
+
 
 loss_fn = nn.CrossEntropyLoss()
 
@@ -60,7 +62,7 @@ def set_seed(seed_value=42):
     """
     random.seed(seed_value)
     np.random.seed(seed_value)
-    torch.manualw_seed(seed_value)
+    torch.manual_seed(seed_value)
     torch.cuda.manual_seed_all(seed_value)
 
 def train(model, train_dataloader, val_dataloader=None, epochs=4, evaluation=False):
