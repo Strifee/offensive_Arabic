@@ -1,9 +1,7 @@
 import numpy as np
 from classifier import BertClassifier
-from bert_processing import Y_val
-from model import bert_predict, val_dataloader
+from model import bert_predict, val_dataloader, Y_val
 from sklearn.metrics import accuracy_score, roc_curve, auc
-from sklearn.model_selection import train_test_split
 
 
 probs = bert_predict(BertClassifier, val_dataloader)
